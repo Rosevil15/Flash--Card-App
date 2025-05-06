@@ -49,95 +49,123 @@
   }
 
   .card-container {
-    flex: 1;
-    perspective: 1000px;
-    position: relative;
-  }
-
-  .card {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #222;
-    border-radius: 15px;
-    padding: 30px 25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #a3a3a3;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .card.flipped {
-    transform: rotateY(180deg);
-    color: #67e8f9;
-  }
-
-  .card .side {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px;
-  }
-
-  .card .side.front {
-    font-weight: 600;
-  }
-
-  .card .side.back {
-    transform: rotateY(180deg);
-    font-style: italic;
-    font-weight: 500;
-  }
-
-  .controls {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  button {
-    background: #67e8f9;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 1rem;
-    color: #121212;
-    box-shadow: 0 3px 12px rgba(103, 232, 249, 0.6);
-    cursor: pointer;
-    transition: background 0.3s ease;
-    user-select: none;
-  }
-
-  button:hover, button:focus {
-    background: #22d3ee;
-    outline: none;
-  }
-
-  button:disabled {
-    background: #555;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  .shuffle-container {
-  margin-top: 20px;
+  flex: 1;
+  perspective: 1000px;
+  position: relative;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  margin-bottom: 20px; /* Add spacing below the card */
+  overflow: hidden;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  position: relative;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.side {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  text-align: center;
+  padding: 0 10px;
+  word-wrap: break-word;
+  border-radius: 15px;
+}
+
+.side.front {
+ background-color: #222;
+ color: #a3a3a3;
+}
+
+.side.back {
+  background-color: #222;
+ color: #a3a3a3;
+  transform: rotateY(180deg);
+}
+
+.icon-button {
+  flex: 1;
+  background: #67e8f9;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: #121212;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+  box-shadow: 0 3px 12px rgba(103, 232, 249, 0.6);
+}
+
+.icon-button:hover,
+.icon-button:focus {
+  background: #22d3ee;
+}
+
+.icon-button:disabled {
+  background: #555;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
   gap: 10px;
-  }
+  margin-top: 10px;
+}
+
+  .shuffle-container {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  
+}
+
+#admin-login-toggle {
+  background: transparent;
+  border: 2px solid #67e8f9;
+  color: #67e8f9;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#admin-login-toggle:hover {
+  background: #67e8f9;
+  color: #121212;
+}
+
+
+
+
   /* Responsive and mobile */
   @media (max-width: 380px) {
     .app-container {
@@ -149,179 +177,284 @@
     button {
       padding: 10px 14px;
     }
-    
+    .card-container {
+  height: 60vh;
+}
+.controls {
+  flex-direction: column;
+  gap: 10px;
+}
+.shuffle-container {
+  margin-top: 10px;
+}   
   }
 </style>
 </head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <body>
-  <audio id="flip-sound" src="flip-sound.mp3"></audio>
-  <audio id="shuffle-sound" src="shuffle-sound.mp3"></audio>
+<audio id="flip-sound" src="flip-sound.mp3"></audio>
+<audio id="shuffle-sound" src="shuffle-sound.mp3"></audio>
+<div class="app-container" role="main" aria-label="Discrete Math Flash Cards App">
+ 
   
-  <div class="app-container" role="main" aria-label="Discrete Math Flash Cards App">
-    <header>
-      <h1>Discrete Math Flash Cards</h1>
-    </header>
-    <div class="card-container">
+  <!-- USER APP SECTION -->
+  <div id="user-app">
+
+      <header>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <button id="admin-login-toggle" aria-label="Login as admin">Admin</button>
+          <h1>Discrete Math Flash Cards</h1>
+        </div>
+      </header>
+      
+
       <div class="card" id="card" tabindex="0" aria-live="polite" aria-atomic="true" role="region">
-        <div class="side front" id="card-front"></div>
-        <div class="side back" id="card-back"></div>
+        <div class="card-inner">
+          <div class="side front" id="card-front"></div>
+          <div class="side back" id="card-back"></div>
+        </div>
       </div>
-    </div>
+      
 
     <div id="progress" style="text-align:center; margin: 10px 0; font-size: 0.95rem;">
       Card 1 of 10
     </div>
-    
+
     <div class="controls">
-      <button id="prev" aria-label="Previous question">Previous</button>
-      <button id="flip" aria-label="Flip card to show answer">Show Answer</button>
-      <button id="next" aria-label="Next question">Next</button>
+      <button id="prev" class="icon-button" aria-label="Previous card"><i class="fas fa-arrow-left"></i></button>
+      <button id="flip" class="icon-button" aria-label="Flip card"><i class="fas fa-arrows-rotate"></i></button>
+      <button id="next" class="icon-button" aria-label="Next card"><i class="fas fa-arrow-right"></i></button>
+      <button id="skip" class="icon-button" aria-label="Skip card"><i class="fas fa-forward"></i></button>
     </div>
-   <div class="shuffle-container">
-  <button id="shuffle" aria-label="Shuffle flashcards">Shuffle</button>
+    
+
+<div class="shuffle-container">
+  <button id="shuffle" aria-label="Shuffle flashcards"><i class="fas fa-random"></i></button>
 </div>
 
+   
     
   </div>
 
-  <script>
-    const flashcards = [
-      {
-        question: "What is a proposition in discrete math?",
-        answer: "A statement that is either true or false, but not both."
+  <!-- ADMIN DASHBOARD SECTION -->
+  <div id="admin-dashboard" style="display: none;">
+    <button id="logout-btn" style="margin-top: 10px;" aria-label="Logout as admin">Logout</button>
+
+    <div id="admin-login" style="text-align:center; margin-bottom: 15px;">
+      <input type="password" id="admin-password" placeholder="Enter admin password" style="padding: 8px; border-radius: 6px; border: none; width: 70%;" />
+      <button id="login-btn" style="margin-top: 10px;">Login as Admin</button>
+    </div>
+
+    <div class="admin-container" id="admin-panel" style="margin-top: 20px; display: none;">
+      <h2 style="font-size: 1rem; color: #67e8f9; text-align: center;">Add New Flashcard</h2>
+      <input type="text" id="new-question" placeholder="Enter question" style="margin-bottom: 10px; padding: 10px; width: 100%; border-radius: 8px; border: none; font-size: 0.9rem;" />
+      <textarea id="new-answer" placeholder="Enter answer" style="margin-bottom: 10px; padding: 10px; width: 100%; border-radius: 8px; border: none; font-size: 0.9rem;"></textarea>
+      <button id="add-card" aria-label="Add new flashcard">Add Flashcard</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SCRIPT SECTION -->
+<script>
+  const flashcards = [
+    {
+       question: "What is a proposition in discrete math?",
+     answer: "A statement that is either true or false, but not both." },
+
+    {
+       question: "Is {1,2} a subset of {1,2,3}?", 
+       answer: "Yes, all elements of {1,2} are in the other set."
       },
-      {
-        question: "Is {1,2} a subset of {1,2,3}?",
-        answer: "Yes, all elements of {1,2} are in the other set."
-      },
-      {
-        question: "What is the power set of a set S?",
-        answer: "The set of all subsets of S, including the empty set and S itself."
-      },
-      {
-        question: "What is the cardinality of a set?",
-        answer: "The number of elements in the set."
-      },
-      {
-        question: "How many elements are in the set {a,b,c,d}?",
-        answer: "4 elements."
-      },
-      {
-        question: "What does it mean for two sets to be disjoint?",
-        answer: "They have no elements in common."
-      },
-      {
-        question: "Define a bijection.",
-        answer: "A function that is both injective (one-to-one) and surjective (onto)."
-      },
-      {
-        question: "What is an equivalence relation?",
-        answer: "A relation that is reflexive, symmetric, and transitive."
-      },
-      {
-        question: "What is {1,2}∪{2,3}?",
-        answer: "{1,2,3}."
-      },
-      {
-        question: "Define a graph in discrete math.",
-        answer: "A set of vertices connected by edges."
-      }
-    ];
-  
-    const card = document.getElementById('card');
-    const front = document.getElementById('card-front');
-    const back = document.getElementById('card-back');
-    const btnPrev = document.getElementById('prev');
-    const btnNext = document.getElementById('next');
-    const btnFlip = document.getElementById('flip');
-    const btnShuffle = document.getElementById('shuffle');
-    const shuffleSound = document.getElementById('shuffle-sound');
-    const flipSound = document.getElementById('flip-sound');
-    const progress = document.getElementById('progress');
-  
-    let currentIndex = 0;
-    let flipped = false;
-  
-    function updateCard() {
-      const cardData = flashcards[currentIndex];
-      front.textContent = cardData.question;
-      back.textContent = cardData.answer;
-  
-      progress.textContent = `Card ${currentIndex + 1} of ${flashcards.length}`;
-      btnPrev.disabled = currentIndex === 0;
-      btnNext.disabled = currentIndex === flashcards.length - 1;
+    { 
+      question: "What is the power set of a set S?",
+       answer: "The set of all subsets of S, including the empty set and S itself."
+     },
+    {
+       question: "What is the cardinality of a set?",
+       answer: "The number of elements in the set."
+       },
+    { 
+      question: "How many elements are in the set {a,b,c,d}?",
+       answer: "4 elements." 
+    },
+    {
+       question: "What does it mean for two sets to be disjoint?", 
+       answer: "They have no elements in common."
+       },
+    {
+      question: "Define a bijection.",
+       answer: "A function that is both injective (one-to-one) and surjective (onto)." 
+    },
+    { 
+      question: "What is an equivalence relation?",
+       answer: "A relation that is reflexive, symmetric, and transitive." 
+    },
+    {
+       question: "What is {1,2}∪{2,3}?"
+       , answer: "{1,2,3}."
+       },
+    { 
+      question: "Define a graph in discrete math.",
+       answer: "A set of vertices connected by edges."
+       }
+  ];
+
+  const card = document.getElementById('card');
+  const front = document.getElementById('card-front');
+  const back = document.getElementById('card-back');
+  const btnPrev = document.getElementById('prev');
+  const btnNext = document.getElementById('next');
+  const btnFlip = document.getElementById('flip');
+  const btnShuffle = document.getElementById('shuffle');
+  const shuffleSound = document.getElementById('shuffle-sound');
+  const flipSound = document.getElementById('flip-sound');
+  const progress = document.getElementById('progress');
+
+  let currentIndex = 0;
+  let flipped = false;
+  let isAdmin = false;
+  const adminPassword = 'discrete123';
+
+  const userApp = document.getElementById('user-app');
+  const adminDashboard = document.getElementById('admin-dashboard');
+  const adminInput = document.getElementById('admin-password');
+  const loginBtn = document.getElementById('login-btn');
+  const btnLogout = document.getElementById('logout-btn');
+  const adminPanel = document.getElementById('admin-panel');
+  const btnAddCard = document.getElementById('add-card');
+  const inputQuestion = document.getElementById('new-question');
+  const inputAnswer = document.getElementById('new-answer');
+
+  function refreshFlashcards() {
+    return flashcards;
+  }
+
+  function updateCard() {
+    const cards = refreshFlashcards();
+    const cardData = cards[currentIndex];
+    if (!cardData) return;
+    front.textContent = cardData.question;
+    back.textContent = cardData.answer;
+
+    progress.textContent = `Card ${currentIndex + 1} of ${cards.length}`;
+    btnPrev.disabled = currentIndex === 0;
+    btnNext.disabled = currentIndex === cards.length - 1;
+  }
+
+  function resetFlipState() {
+    flipped = false;
+    card.classList.remove('flipped');
+    btnFlip.textContent = 'Show Answer';
+  }
+
+  btnFlip.addEventListener('click', () => {
+    flipped = !flipped;
+    card.classList.toggle('flipped');
+    btnFlip.textContent = flipped ? 'Show Question' : 'Show Answer';
+    flipSound.currentTime = 0;
+    flipSound.play().catch(e => {});
+  });
+  const btnSkip = document.getElementById('skip');
+
+btnSkip.addEventListener('click', () => {
+  currentIndex = Math.floor(Math.random() * flashcards.length);
+  resetFlipState();
+  updateCard();
+});
+
+  btnNext.addEventListener('click', () => {
+    if (currentIndex < flashcards.length - 1) {
+      currentIndex++;
+      resetFlipState();
+      updateCard();
     }
-  
-    function resetFlipState() {
-      flipped = false;
-      card.classList.remove('flipped');
-      btnFlip.textContent = 'Show Answer';
-      btnFlip.setAttribute('aria-label', 'Flip card to show answer');
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      resetFlipState();
+      updateCard();
     }
-  
-    btnFlip.addEventListener('click', () => {
-      flipped = !flipped;
-  
-      if (flipped) {
-        card.classList.add('flipped');
-        btnFlip.textContent = 'Show Question';
-        btnFlip.setAttribute('aria-label', 'Flip card to show question');
-      } else {
-        card.classList.remove('flipped');
-        btnFlip.textContent = 'Show Answer';
-        btnFlip.setAttribute('aria-label', 'Flip card to show answer');
-      }
-  
-      flipSound.currentTime = 0;
-      flipSound.play().catch(e => console.warn('Flip sound error:', e));
-    });
-  
-    btnNext.addEventListener('click', () => {
-      if (currentIndex < flashcards.length - 1) {
-        currentIndex++;
-        resetFlipState();
-        updateCard();
-      }
-    });
-  
-    btnPrev.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        resetFlipState();
-        updateCard();
-      }
-    });
-  
-    btnShuffle.addEventListener('click', () => {
-      for (let i = flashcards.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
-      }
+  });
+
+  btnShuffle.addEventListener('click', () => {
+    for (let i = flashcards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+    }
+    currentIndex = 0;
+    resetFlipState();
+    updateCard();
+    shuffleSound.currentTime = 0;
+    shuffleSound.play().catch(e => {});
+  });
+
+  loginBtn.addEventListener('click', () => {
+    const entered = adminInput.value.trim();
+    if (entered === adminPassword) {
+      isAdmin = true;
+      userApp.style.display = 'none';
+      adminDashboard.style.display = 'block';
+      adminPanel.style.display = 'block';
+      adminInput.value = '';
       currentIndex = 0;
       resetFlipState();
       updateCard();
-  
-      shuffleSound.currentTime = 0;
-      shuffleSound.play().catch(e => console.warn('Shuffle sound error:', e));
-    });
-  
-    // Keyboard support for flipping and navigation
-    card.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        btnFlip.click();
-      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        btnNext.click();
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        btnPrev.click();
-      }
-    });
-  
-    // Initialize
+      alert('Admin access granted.');
+    } else {
+      alert('Incorrect password.');
+    }
+  });
+
+  btnLogout.addEventListener('click', () => {
+    isAdmin = false;
+    userApp.style.display = 'block';
+    adminDashboard.style.display = 'none';
+    adminPanel.style.display = 'none';
+    resetFlipState();
     updateCard();
-  </script>
-  
+    alert('Logged out of admin mode.');
+  });
+
+  btnAddCard.addEventListener('click', () => {
+    const question = inputQuestion.value.trim();
+    const answer = inputAnswer.value.trim();
+    if (question && answer) {
+      flashcards.push({ question, answer });
+      inputQuestion.value = '';
+      inputAnswer.value = '';
+      alert('New flashcard added!');
+updateCard(); // optional: update card display if you want immediate reflection
+    } else {
+      alert('Please fill in both the question and answer.');
+    }
+  });
+
+  card.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      btnFlip.click();
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      btnNext.click();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      btnPrev.click();
+    }
+  });
+  const adminToggleBtn = document.getElementById('admin-login-toggle');
+adminToggleBtn.addEventListener('click', () => {
+  userApp.style.display = 'none';
+  adminDashboard.style.display = 'block';
+});
+
+
+  // Initialize
+  updateCard();
+</script>
+
 </body>
 </html>
