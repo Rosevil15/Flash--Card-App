@@ -134,17 +134,40 @@
 
 .controls {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
-  .shuffle-container {
-  margin-top: 12px;
+.icon-button {
+  background: #67e8f9;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: #121212;
+  box-shadow: 0 3px 12px rgba(103, 232, 249, 0.6);
+  cursor: pointer;
   display: flex;
   justify-content: center;
-  
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  transition: background 0.3s ease;
 }
+
+.icon-button:hover,
+.icon-button:focus {
+  background: #22d3ee;
+}
+
+.icon-button:disabled {
+  background: #555;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
 
 #admin-login-toggle {
   background: transparent;
@@ -162,6 +185,59 @@
   background: #67e8f9;
   color: #121212;
 }
+#admin-dashboard {
+  padding: 20px;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border-radius: 15px;
+}
+
+#admin-login input,
+#admin-login button,
+#admin-panel input,
+#admin-panel textarea,
+#admin-panel button {
+  background: #2b2b2b;
+  color: #e0e0e0;
+  border: 1px solid #67e8f9;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#admin-panel button,
+#admin-login button {
+  background-color: #67e8f9;
+  color: #121212;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#admin-panel button:hover,
+#admin-login button:hover {
+  background-color: #22d3ee;
+}
+#logout-btn {
+  background: transparent;
+  border: 2px solid #67e8f9;
+  color: #67e8f9;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#logout-btn:hover {
+  background: #67e8f9;
+  color: #121212;
+}
+
 
 
 
@@ -222,16 +298,24 @@
     </div>
 
     <div class="controls">
-      <button id="prev" class="icon-button" aria-label="Previous card"><i class="fas fa-arrow-left"></i></button>
-      <button id="flip" class="icon-button" aria-label="Flip card"><i class="fas fa-arrows-rotate"></i></button>
-      <button id="next" class="icon-button" aria-label="Next card"><i class="fas fa-arrow-right"></i></button>
-      <button id="skip" class="icon-button" aria-label="Skip card"><i class="fas fa-forward"></i></button>
+      <button id="prev" class="icon-button" aria-label="Previous question">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <button id="flip" class="icon-button" aria-label="Flip card to show answer">
+        <i class="fas fa-rotate"></i>
+      </button>
+      <button id="next" class="icon-button" aria-label="Next question">
+        <i class="fas fa-arrow-right"></i>
+      </button>
+      <button id="skip" class="icon-button" aria-label="Skip card">
+        <i class="fas fa-forward"></i>
+      </button>
+      <button id="shuffle" class="icon-button" aria-label="Shuffle flashcards">
+        <i class="fas fa-random"></i>
+      </button>
     </div>
     
 
-<div class="shuffle-container">
-  <button id="shuffle" aria-label="Shuffle flashcards"><i class="fas fa-random"></i></button>
-</div>
 
    
     
